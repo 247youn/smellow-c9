@@ -1,0 +1,174 @@
+ <ul class="nav nav-tabs navbar-fixed-top navbar-default">
+  <li role="presentation" >  <a href="evalpage">  평가늘리기 </a>  </li>
+  <li role="presentation" class="pull-mid"> <a href="https://smellow-a247youn-2.c9.io/home/list_bodyclean"> 바디클렌저 </a> </li>
+  
+    <li role="presentation" class="pull-right"> <a href='/users/sign_out'> 로그아웃 </a> </li>
+  <li role="presentation" class="pull-right"> <a href="mypage"> <%=@user.email%>  </a> </li>
+	</ul>
+
+<br/><br/>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 profile_bg">
+      
+      <div class="col-md-4"></div>
+      <div class="col-md-4 profile_div">
+        <img class="img-circle profile_img" src="https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s320x320/e15/11313370_1434376700214927_1359520543_n.jpg">
+        <br><br><%=@user.email%>
+      </div>
+      <div class="col-md-4"></div>
+      
+      <!--%= image_tag("background.jpg", :class => "profile_bg_img") %-->
+    </div>
+  </div>
+</div>
+
+<!--
+<nav id="navbar" class="navbar">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="navbar-center">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Smelling</a></li>
+            <li><a href="#">SmellBox</a></li>
+            <li><a href="#">Recommend</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+</nav>
+-->  
+<div class="container-fluid">
+  <div class="row reco">
+    <div class="col-md-12 header_name">Recommand</div>
+    <div class="col-md-12">
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box">
+          <img class="product_img" src="http://itemimage.cjmall.com/goods_images/32/890/32384890M.jpg">
+          <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></div>
+          <div class="col-md-12 product_name">플로라 바이 구찌 그레이셔스 튜베로즈 50ML</div>
+          <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span><br>관심취향</div>
+          <div class="col-md-6 product_span"><span class="glyphicon glyphicon-user"></span><br>코멘트보기</div>
+        </div>
+      </div>
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box"></div>
+      </div>
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box"></div>
+      </div>
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row select">
+    <div class="col-md-12 header_name">Selected</div>
+    <div class="col-md-12">
+    	<% @evaluations.each do |evaluation| %>
+      <div class="col-md-2 product_div">
+        <div class="col-md-12 product_box">
+          <img class="product_img" src="<%=@products.find(evaluation.product_id).imglink %>" alt="...">
+          <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></div>
+          <div class="col-md-12 product_name ellip"><%= @products.find(evaluation.product_id).name %></div>
+          <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span><br>관심취향</div>
+          <div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" 
+          data-productid="<%= @products.find(evaluation.product_id).id %>"
+          data-name = "<%= @products.find(evaluation.product_id).name %>"
+          data-imglink ="<%= @products.find(evaluation.product_id).imglink %>"
+          ><span class="glyphicon glyphicon-user"></span><br>
+          코멘트보기
+</div>
+          
+
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">코멘트 보기 </h4>
+      </div>
+      <div class="container-fluid">
+        <div class="text-center">
+        asdf
+        <img id="comment_product_img" alt="...">
+
+        </div>
+        <br>
+        <input class="form-control" id="comment" name="comment" placeholder="이 제품에 대한 코멘트를 남겨주세요." type="text" />
+        <br>
+            
+            
+        <% @comments.each do |comment| %>
+           <div><%= comment.comment_text %></div>
+        <% end %>
+            
+           
+           
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#myModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var productid = button.data('productid') 
+  var name = button.data('name')
+  var imglink = button.data('imglink')
+  var modal = $(this)
+  modal.find('.modal-title').text(name);
+  modal.find('#comment').attr("product-id", productid);
+  modal.find('#comment_product_img').attr("src",imglink);
+  
+
+})
+
+  jQuery(function () { 
+	$("#comment").keyup(function(event){
+		if(event.keyCode == 13){
+			var comment = $("#comment").val();
+			var productid = $("#comment").attr("product-id");
+			postComment(event, comment, productid);
+			
+		}
+	})
+});
+
+
+function postComment(event, comment, productid){
+   
+		event.preventDefault();
+
+  		$.ajax({
+  			type: "POST",
+  			url: "/postcomment",
+  			data: { product_id: productid, comment_text: comment },
+  			success: function(result) {
+  			  alert("Comment success!");
+    		}
+    	});
+	}
+
+
+
+</script>
+
+

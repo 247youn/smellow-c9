@@ -1,0 +1,39 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<h2>Export Evaluation CSV</h2>
+
+
+
+
+
+			<table border="2">
+				<tr>
+					<th style="text-align:center" colspan="1">&nbsp;User ID&nbsp;</th>
+					<th style="text-align:center" colspan="<%=@products.length %>">&nbsp;Chosen Products&nbsp;</th>
+				</tr>
+				<tr>
+					<th style="text-align:center"></th>
+					<% @products.each do |product| %>
+			   		<th style="text-align:center">&nbsp;<%= product.name %>&nbsp;</th>
+			   		<% end %>
+				</tr>
+			    
+			    <% @hash_users.each do |user| %>
+			    <tr>
+					<th style="text-align:center">&nbsp;<%= user[0] %>&nbsp;</th>
+					<th style="text-align:center">&nbsp;
+						<% user[1].each do |product| %>
+							<%= product %>,
+						<% end %> 
+						&nbsp;</th>
+				</tr>
+				<% end %>
+			</table>
+
+<br><br>
+			<%= form_tag '/export', multipart: true do %>
+  <%= submit_tag "export csv" %>
+<% end %>

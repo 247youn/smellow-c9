@@ -1,0 +1,109 @@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <ul class="nav nav-tabs navbar-fixed-top navbar-default">
+  <li role="presentation" >  <a href="evalpage">  평가늘리기 </a>  </li>
+  <li role="presentation" class="pull-center" > <a href="/home/list_bodyclean"> 바디클렌저 </a> </li>
+  
+    <li role="presentation" class="pull-right"> <a href='/users/sign_out'> 로그아웃 </a> </li>
+  <li role="presentation" class="pull-right"> <a href="mypage"> <%=@user.email%>  </a> </li>
+	</ul>
+
+<br/><br/>
+<h1 class="text-center">Smellow</h1>
+<br/>
+<div class="container">
+
+	<% @products.each do |product| %>
+		<%= if product.category == '바디클렌저' %>
+		<div class="col-sm-6 col-md-3" product-id="<%= product.id %>">
+			<div class="thumbnail">
+				<img src="<%=product.imglink %>" alt="...">
+				<div class="caption">
+					<p class="text-center"><span><%= product.brand %></span></p>
+					<p class="text-center ellip"><span><%= product.name %></span></p>
+					<p id="product-<%= product.id %>" class="text-center">
+        	<a class="btn btn-default btn-rate rate-like" role="button">좋아함</a> 
+        	<a class="btn btn-default btn-rate rate-soso" role="button">보통</a> 
+        	<a class="btn btn-default btn-rate rate-dislike" role="button">싫어함</a>
+        	</p>
+      	</div>
+    	</div>
+  	</div>
+  <% end %>
+
+       
+	<% end %>
+
+	
+</div>
+
+
+<style>
+	.ellip {
+      white-space:nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+</style>
+
+
+
+<script type="text/javascript">
+
+	<% @evaluations.each do |evaluation| %>
+		var parent = document.getElementById("product-<%= @products.find(evaluation.product_id).id%>");
+		<% if evaluation.rate == 1%>
+			parent.querySelector(".rate-like").className += " active";
+		<% elsif evaluation.rate == 0%>
+			parent.querySelector(".rate-soso").className += " active";
+		<% elsif evaluation.rate == -1%>
+			parent.querySelector(".rate-dislike").className += " active";
+		<% end %>
+	<% end %>
+
+	
+
+	
+
+
+	$(".rate-like").click(function(event) {
+		postRate(event, 1);
+  	});
+
+	$(".rate-soso").click(function() {
+  		postRate(event, 0)
+	});
+
+	$(".rate-dislike").click(function() {
+		postRate(event, -1)
+	});
+
+	function postRate(event, score){
+		var button = $(event.target);
+		var allbuttons = $(event.target).parent().children("a");
+		var evarcard =  $(event.target).parent().parent().parent().parent();
+		var productid= evarcard[0].getAttribute('product-id')
+  		event.preventDefault();
+  		$.ajax({
+  			type: "POST",
+  			url: "/evalrate",
+  			data: { user_id: "<%=@user.id%>", product_id: productid, rate: score },
+  			success: function(result) {
+  				allbuttons.removeClass("active");
+  				button.addClass("active");
+    		}
+    	});
+
+	}
+
+
+	
+
+	
+
+</script>
+
+
+
