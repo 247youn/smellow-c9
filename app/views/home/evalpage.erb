@@ -1,203 +1,174 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-
-<div>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#tab-home" aria-controls="tab-home" role="tab" data-toggle="tab"> 평가늘리기 </a></li>
-    <li role="presentation"><a href="#tab-bodycleanser" aria-controls="tab-bodycleanser" role="tab" data-toggle="tab"> 바디클렌저 </a></li>
-    <li role="presentation"><a href="#tab-soap" aria-controls="tab-soap" role="tab" data-toggle="tab"> 비누 </a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-  	<li role="presentation" class="pull-right"> <a href='/users/sign_out'> 로그아웃 </a> </li>
-  	<li role="presentation" class="pull-right"> <a href="mypage"> <%=@user.email%>  </a> </li>
-  
-  </ul>
-
-
-<br/><br/>
-<h1 class="text-center">Smellow</h1>
-<br/>
-
-
-
-
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane fade in active" id="tab-home">
-		<div class="container">
-			<% @products.each do |product| %>
-				<div class="col-sm-6 col-md-3" product-id="<%= product.id %>">
-					<div class="thumbnail">
-						<img src="<%=product.imglink %>" alt="...">
-						<div class="caption">
-							<p class="text-center"><span><%= product.brand %></span></p>
-							<p class="text-center ellip"><span><%= product.name %></span></p>
-							<p id="product-<%= product.id %>" class="text-center">
-			        
-		        	<a class="btn btn-default btn-rate rate-like" role="button">좋아함</a> 
-		        	<a class="btn btn-default btn-rate rate-soso" role="button">보통</a> 
-		        	<a class="btn btn-default btn-rate rate-dislike" role="button">싫어함</a>
-		        	
-		        </p>
-		      </div>
-		    </div>
-		  </div>
-		
-		       
-			<% end %>
+<!-- main menu -->
+<a href="/users/sign_in">
+	<%=i mage_tag( "home.png", :class=> "home_logo") %></a>
+<nav id="navbar" class="navbar navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4 col-sm-3 col-xs-6"></div>
+			<div class="col-md-4 col-sm-8 col-xs-6">
+				<div class="navbar-center">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="evalpage">Smelling</a></li>
+						<li>
+							<a href="mypage">
+								<%=@user.email%>
+							</a>
+						</li>
+						<li><a href='/users/sign_out'> Log out </a> </li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-1"></div>
 		</div>
-  </div>
-  
-  
-  <div role="tabpanel" class="tab-pane fade" id="tab-bodycleanser">
-  
-  <div class="container">
-
-	<% @products.each do |product| %>
-		<% if product.category == '바디클렌저' %>
-		<div class="col-sm-6 col-md-3" product-id="<%= product.id %>">
-			<div class="thumbnail">
-				<img src="<%=product.imglink %>" alt="...">
-				<div class="caption">
-					<p class="text-center"><span><%= product.brand %></span></p>
-					<p class="text-center ellip"><span><%= product.name %></span></p>
-					<p id="product-<%= product.id %>" class="text-center">
-        	<a class="btn btn-default btn-rate rate-like" role="button">좋아함</a> 
-        	<a class="btn btn-default btn-rate rate-soso" role="button">보통</a> 
-        	<a class="btn btn-default btn-rate rate-dislike" role="button">싫어함</a>
-        	</p>
-      	</div>
-    	</div>
-  	</div>
-  	<% end %>
-
-       
-	<% end %>
 	</div>
-
-  
-  
-  
-  </div>
-
-
-  <div role="tabpanel" class="tab-pane fade" id="tab-soap">
-  
-  <div class="container">
-
-	<% @products.each do |product| %>
-		<% if product.category == '비누' %>
-		<div class="col-sm-6 col-md-3" product-id="<%= product.id %>">
-			<div class="thumbnail">
-				<img src="<%=product.imglink %>" alt="...">
-				<div class="caption">
-					<p class="text-center"><span><%= product.brand %></span></p>
-					<p class="text-center ellip"><span><%= product.name %></span></p>
-					<p id="product-<%= product.id %>" class="text-center">
-        	<a class="btn btn-default btn-rate rate-like" role="button">좋아함</a> 
-        	<a class="btn btn-default btn-rate rate-soso" role="button">보통</a> 
-        	<a class="btn btn-default btn-rate rate-dislike" role="button">싫어함</a>
-        	</p>
-      	</div>
-    	</div>
-  	</div>
-  	<% end %>
-
-       
-	<% end %>
-	</div>
-  </div>
-
-
-  <div role="tabpanel" class="tab-pane fade" id="settings">...</div>
-</div>
-
-  
-  
-	
-
-<style>
-	.ellip {
-      white-space:nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-   }
-</style>
+</nav>
+<!-- main menu end -->
 
 
 
-<script type="text/javascript">
-
-	<% @evaluations.each do |evaluation| %>
-		var parent = document.getElementById("product-<%= @products.find(evaluation.product_id).id%>");
-		<% if evaluation.rate == 1%>
-			parent.querySelector(".rate-like").className += " active";
-		<% elsif evaluation.rate == 0%>
-			parent.querySelector(".rate-soso").className += " active";
-		<% elsif evaluation.rate == -1%>
-			parent.querySelector(".rate-dislike").className += " active";
-		<% end %>
-	<% end %>
-
-	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-		<% @evaluations.each do |evaluation| %>
-		address = String(e.target);
-		tab_name = address.replace("https://smellow-a247youn-2.c9.io/evalpage#", "");
-		
-		 
-		 	var tab = document.getElementById(tab_name);
-		 	alert(tab);
-		 	var parent = tab.querySelector("#product-<%= @products.find(evaluation.product_id).id%>");
-			//var parent = document.getElementById("product-<%= @products.find(evaluation.product_id).id%>");
-			<% if evaluation.rate == 1%>
-				parent.querySelector(".rate-like").className += " active";
-			<% elsif evaluation.rate == 0%>
-				parent.querySelector(".rate-soso").className += " active";
-			<% elsif evaluation.rate == -1%>
-				parent.querySelector(".rate-dislike").className += " active";
-			<% end %>
-		<% end %>
-  	// newly activated tab
-  	e.relatedTarget // previous active tab
-	})
+		<!-- Split button -->
+		<div class="container">
+		<h1 class="text-center">Smellow</h1>
+			<div class="col-md-12">
+				<div class="btn-group">
+					<div class="col-md-3">
+						<button type="button" class="btn btn-danger">Action</button>
+						<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
+		<div class="tab-content container-fluid">
+			<div role="tabpanel" class="tab-pane fade in active" id="tab-home">
+				<div class="container reco">
+					<div class="col-md-12">
+						<% @products.sort_by{rand}.each do |product| %>
+							<div class="col-sm-6 col-md-3 product_div" product-id="<%= product.id %>">
 
-	$(".rate-like").click(function(event) {
-		postRate(event, 1);
-  	});
+								<div class="col-md-12 product_box">
+									<div class="col-md-3 product_select"><img style="width:25px" src="http://imageshack.com/a/img538/4066/AuggaK.png"></div>
+									<img class="product_img" style="max-height:210px; max-width:190px" src="<%=product.imglink %>" alt="...">
 
-	$(".rate-soso").click(function() {
-  		postRate(event, 0)
-	});
-
-	$(".rate-dislike").click(function() {
-		postRate(event, -1)
-	});
-
-	function postRate(event, score){
-		var button = $(event.target);
-		var allbuttons = $(event.target).parent().children("a");
-		var evarcard =  $(event.target).parent().parent().parent().parent();
-		var productid= evarcard[0].getAttribute('product-id')
-  		event.preventDefault();
-  		$.ajax({
-  			type: "POST",
-  			url: "/evalrate",
-  			data: { user_id: "<%=@user.id%>", product_id: productid, rate: score },
-  			success: function(result) {
-  				allbuttons.removeClass("active");
-  				button.addClass("active");
-    		}
-    	});
-
-	}
+									<div class="caption">
+										<!--<p class="text-center"><span><%= product.brand %></span></p>-->
+										<div class="col-md-12 product_name ellip"><span><%= product.name %></span></div>
+										<p id="product-<%= product.id %>" class="text-center">
+											<a class="col-md-6 eval_bt btn btn-rate rate-like" role="button">좋아함</a>
+											<a class="col-md-6 eval_bt btn btn-rate rate-dislike" role="button">싫어함</a>
+											<div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span>
+												<br>관심취향</div>
+											<div class="col-md-6 product_span"><span class="glyphicon glyphicon-user"></span>
+												<br>코멘트보기</div>
+										</p>
+									</div>
+								</div>
+						</div>
+					<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
-	
 
-	
 
-</script>
 
+
+			<script type="text/javascript">
+				<% @evaluations.each do |evaluation | %>
+						var parent = document.getElementById("product-<%= @products.find(evaluation.product_id).id%>"); <%
+					if evaluation.rate == 1 %>
+					parent.querySelector(".rate-like").className += " active"; <% elsif evaluation.rate == 0 %>
+					parent.querySelector(".rate-soso").className += " active"; <% elsif evaluation.rate == -1 %>
+					parent.querySelector(".rate-dislike").className += " active"; <% elsif evaluation.rate == 5 %>
+					parent.querySelector(".rate-wish").className += " active"; <% end %>
+					<% end %>
+
+					$(".rate-like").click(function(event) {
+						postRate(event, 1);
+					});
+
+				$(".rate-soso").click(function() {
+					postRate(event, 0)
+				});
+
+				$(".rate-dislike").click(function() {
+					postRate(event, -1)
+				});
+
+				$(".rate-wish").click(function() {
+					postRate(event, 5)
+				});
+
+
+
+
+
+
+				function postRate(event, score) {
+					var button = $(event.target);
+					var allbuttons = $(event.target).parent().children("a");
+					var evarcard = $(event.target).parent().parent().parent().parent();
+					var productid = evarcard[0].getAttribute('product-id')
+					event.preventDefault();
+					$.ajax({
+						type: "POST",
+						url: "/evalrate",
+						data: {
+							user_id: "<%=@user.id%>",
+							product_id: productid,
+							rate: score
+						},
+						success: function(result) {
+							var isCanceling = button.hasClass("active");
+							allbuttons.removeClass("active");
+							if (isCanceling) {
+								$("#click-cancel").removeClass("in").show();
+								$("#click-cancel").delay(1000).addClass("in").fadeOut(500);
+							}
+							else {
+								button.addClass("active");
+								$("#click-save").removeClass("in").show();
+								$("#click-save").delay(1000).addClass("in").fadeOut(500);
+							}
+
+
+
+						}
+					});
+
+				}
+			</script>
+
+			<div id="click-save" class="alert alert-success alert-click fade" role="alert">
+				<strong>저장되었습니다.</strong>
+			</div>
+			<div id="click-cancel" class="alert alert-success alert-click fade" role="alert">
+				<strong>취소되었습니다.</strong>
+			</div>
+
+
+			<style>
+				.alert-click {
+					position: fixed;
+					top: 10%;
+					left: 45%;
+					width: 10%;
+					text-align: center;
+				}
+			</style>

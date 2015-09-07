@@ -10,47 +10,15 @@
 <% else %>
 
 
-<div>
-  <%= image_tag("main.png", :class => "main_logo") %>
-  <%= image_tag("bg1.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_left") %>
-  <%= image_tag("bg2.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_right") %>
-</div>
-
-
 
 <script>
-jQuery(function () { 
-	$("body").click(function(){
-		$(".img_bg_left").animate({
-			opacity: 0.25,
-			left: "-=400",
-			bottom: "100%"
-		}, 2000, function() {
-		    
-});
-		$(".img_bg_right").animate({
-			opacity: 0.25,
-			right: "-=400",
-			top: "100%"
-		}, 2000, function() {
-		    window.open("/users/sign_in", "_self");
-});
-        $(".main_logo").animate({
-			opacity: 0.25
-		}, 2000, function() {
-		    window.open("/users/sign_in", "_self");
-});
-
-
-	});
-
-});
-
+	window.open("/users/sign_in", "_self");
 </script>
+	
+
 
 
 
 
 
 <% end %>
-<br>

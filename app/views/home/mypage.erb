@@ -1,12 +1,24 @@
- <ul class="nav nav-tabs navbar-fixed-top navbar-default">
-  <li role="presentation" >  <a href="evalpage">  평가늘리기 </a>  </li>
-  <li role="presentation" class="pull-mid"> <a href="https://smellow-a247youn-2.c9.io/home/list_bodyclean"> 바디클렌저 </a> </li>
-  
-    <li role="presentation" class="pull-right"> <a href='/users/sign_out'> 로그아웃 </a> </li>
-  <li role="presentation" class="pull-right"> <a href="mypage"> <%=@user.email%>  </a> </li>
-	</ul>
 
-<br/><br/>
+<!-- main menu -->
+<a href="/users/sign_in"><%= image_tag("home.png", :class => "home_logo") %></a>
+<nav id="navbar" class="navbar navbar-fixed-top">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 col-sm-3 col-xs-6"></div>
+    <div class="col-md-4 col-sm-8 col-xs-6">
+      <div class="navbar-center">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="evalpage">Smelling</a></li>
+          <li><a href="mypage"> <%=@user.email%> </a> </li>
+          <li><a href='/users/sign_out'> Log out </a> </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-1"></div>
+  </div>
+</div>
+</nav>
+<!-- main menu end -->
 
 <div class="container-fluid">
   <div class="row">
@@ -24,25 +36,25 @@
   </div>
 </div>
 
-<!--
 <nav id="navbar" class="navbar">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-4">
-        <div class="navbar-center">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Smelling</a></li>
-            <li><a href="#">SmellBox</a></li>
-            <li><a href="#">Recommend</a></li>
-          </ul>
-        </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="navbar-center">
+        <ul class="nav navbar-nav">
+          <li><a href="#">SmellBox</a></li>
+          <li><a href="mypage">Recommend</a></li>
+          <li><a href="mypage">Mysmell</a> </li>
+        </ul>
       </div>
-      <div class="col-md-4"></div>
     </div>
+    <div class="col-md-4"></div>
   </div>
+</div>
 </nav>
--->  
+
+
 <div class="container-fluid">
   <div class="row reco">
     <div class="col-md-12 header_name">Recommand</div>
@@ -69,11 +81,41 @@
   </div>
 </div>
 
+
 <div class="container-fluid">
   <div class="row select">
-    <div class="col-md-12 header_name">Selected</div>
+    <div class="col-md-12 header_name">써보고 싶어요</div>
     <div class="col-md-12">
-    	<% @evaluations.each do |evaluation| %>
+    	<% @evaluations.where(rate: 5).each do |evaluation| %>
+      <div class="col-md-2 product_div">
+        <div class="col-md-12 product_box">
+          <img class="product_img" src="<%=@products.find(evaluation.product_id).imglink %>" alt="...">
+          <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></div>
+          <div class="col-md-12 product_name ellip"><%= @products.find(evaluation.product_id).name %></div>
+          <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span><br>관심취향</div>
+          <div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" 
+          data-productid="<%= @products.find(evaluation.product_id).id %>"
+          data-name = "<%= @products.find(evaluation.product_id).name %>"
+          data-imglink ="<%= @products.find(evaluation.product_id).imglink %>"
+          ><span class="glyphicon glyphicon-user"></span><br>
+          코멘트보기
+</div>
+          
+
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid">
+  <div class="row select">
+    <div class="col-md-12 header_name">써봤어요</div>
+    <div class="col-md-12">
+    	<% @evaluations.where(rate:1).each do |evaluation| %>
       <div class="col-md-2 product_div">
         <div class="col-md-12 product_box">
           <img class="product_img" src="<%=@products.find(evaluation.product_id).imglink %>" alt="...">
@@ -113,15 +155,18 @@
         </div>
         <br>
         <input class="form-control" id="comment" name="comment" placeholder="이 제품에 대한 코멘트를 남겨주세요." type="text" />
-        <br>
+
             
-            
+      </div>
+      <div class="container">
         <% @comments.each do |comment| %>
-           <div><%= comment.comment_text %></div>
+        <div>
+           <br>
+          <span><%= @users.find(comment.user_id).email %> 님의 댓글</span>
+          <span><%= comment.comment_text %></span>
+           <br>
+        </div>
         <% end %>
-            
-           
-           
       </div>
     </div>
   </div>
@@ -137,7 +182,6 @@
   modal.find('.modal-title').text(name);
   modal.find('#comment').attr("product-id", productid);
   modal.find('#comment_product_img').attr("src",imglink);
-  
 
 })
 

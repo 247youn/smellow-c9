@@ -1,5 +1,16 @@
 
-<div class="container-fluid-pink">
+<div>
+  <%= image_tag("main.png", :class => "main_logo") %>
+  <%= image_tag("bg1.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_left") %>
+  <%= image_tag("bg2.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_right") %>
+</div>
+
+
+
+
+
+
+<div class="container-fluid-pink" id="login-bg">
   <%= image_tag("bg3.png", :class => "bg_logo") %>
   <div class="row-high" style="z-index:999;">
     <div class="row">
@@ -70,4 +81,39 @@
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+jQuery(function () { 
+	$("body").click(function(){
+		$(".img_bg_left").animate({
+			opacity: 0,
+			left: "-=400",
+			bottom: "100%"
+		}, 2000, function() {
+		  $(".img_bg_left").remove();
+		    
+});
+		$(".img_bg_right").animate({
+			opacity: 0,
+			right: "-=400",
+			top: "100%"
+		}, 2000, function() {
+		  
+		  $(".img_bg_right").remove();
+		  
+});
+  $(".main_logo").animate({
+			opacity: 0
+		}, 2000, function() {
+		  
+		  $(".main_logo").remove();
+		  
+});
+
+
+	});
+
+});
+
 </script>

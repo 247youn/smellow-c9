@@ -10,6 +10,7 @@ class HomeController < ApplicationController
     	    @products = Product.all
 			@user = User.find(current_user.id)
 			@evaluations = Evaluation.where(user_id: @user.id)
+			
     	end
 		
 	end
@@ -25,6 +26,7 @@ class HomeController < ApplicationController
 	    unless user_signed_in?
 	        redirect_to '/'
 	    else
+	    	@users = User.all
 	        @user = User.find(current_user.id)
 	        @evaluations = Evaluation.where(user_id: @user.id)
 	        @products = Product.all
