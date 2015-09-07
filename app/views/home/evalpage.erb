@@ -3,7 +3,7 @@
 
 <!-- main menu -->
 <a href="/users/sign_in">
-	<%=i mage_tag( "home.png", :class=> "home_logo") %></a>
+	<%=image_tag( "home.png", :class=> "home_logo") %></a>
 <nav id="navbar" class="navbar navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="row">
@@ -30,23 +30,25 @@
 
 
 		<!-- Split button -->
-		<div class="container">
-		<h1 class="text-center">Smellow</h1>
-			<div class="col-md-12">
-				<div class="btn-group">
-					<div class="col-md-3">
-						<button type="button" class="btn btn-danger">Action</button>
-						<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="caret"></span>
-							<span class="sr-only">Toggle Dropdown</span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="#">Separated link</a></li>
-						</ul>
+		<div class="container-fluid">
+			<div class = "row reco">
+			<h1 class="text-center">Smellow</h1>
+				<div class="col-md-12">
+					<div class="btn-group">
+						<div class="col-md-3">
+							<button type="button" class="btn btn-danger">Action</button>
+							<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -146,9 +148,6 @@
 								$("#click-save").removeClass("in").show();
 								$("#click-save").delay(1000).addClass("in").fadeOut(500);
 							}
-
-
-
 						}
 					});
 
