@@ -1,11 +1,4 @@
 
-<div>
-  <%= image_tag("main.png", :class => "main_logo") %>
-  <%= image_tag("bg1.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_left") %>
-  <%= image_tag("bg2.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_right") %>
-</div>
-
-
 
 
 
@@ -65,23 +58,6 @@
 
 
 
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '866779876733046',
-      xfbml      : true,
-      version    : 'v2.4'
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
 
 <script>
 jQuery(function () { 

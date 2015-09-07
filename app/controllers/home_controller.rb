@@ -7,10 +7,15 @@ class HomeController < ApplicationController
     	unless user_signed_in?
     	    redirect_to '/'
     	else
-    	    @products = Product.all
+    	    
 			@user = User.find(current_user.id)
 			@evaluations = Evaluation.where(user_id: @user.id)
-			
+			@products = Product.all
+			@evaluations.each do |evaluation|
+				if evaluation.rate != 5
+	 				@products = @products.where.not(id: evaluation.product_id)
+	 			end
+			end
     	end
 		
 	end

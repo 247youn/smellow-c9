@@ -6,6 +6,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import url(https://fonts.googleapis.com/css?family=Asap:400,400italic,700,700italic);
+//@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 * {
 	font-family: 'Asap', sans-serif;
@@ -17,6 +18,9 @@ body {
     color: white;
     background-color: gray;
 }
+
+row {
+    }
 
 a { 
     text-shadow: 0px;
@@ -125,20 +129,47 @@ a {
 	
 .eval_bt {
 	width:100%;
-	height: 35px;
 	text-align:center;
 	color: white;
 	border-radius: 0px;
 	background-color:rgb(255,183,172);
-	padding:10px;
+	padding:5px;
 	}
 	
-.btn-group{
-   border-radius: 6px;
+.bttn-group{
+   border-radius: 0px;
    border:0px;
-   padding:10px;
+   
 }	
 
+.bttn{
+    font-size: 12px;
+    padding:8px;
+    background-color:#cccccc;
+}
+
+
+#click-save{
+    background-color: rgba(0,0,0,20);
+    color:white;
+    padding: 15px 25px 15px 25px;
+    border-radius: 3px;
+}
+
+#click-cancel{
+    background-color: rgba(0,0,0,20);
+    color:white;
+    padding: 15px 25px 15px 25px;
+    border-radius: 3px;
+}
+
+.main_head {
+    background-color:white;
+    color: rgb(100,100,100);
+    text-align: center;
+    padding:30px;
+    
+    }
 
 /* --------------mypage-------------- */
 
@@ -154,6 +185,12 @@ a {
     height: 1px;
 }
 
+.header_tag {
+    margin-top:50px;
+    font-size:60px;
+    text-align:center;
+    }
+
 .profile_div {
     position: absolute;
     text-align:center;
@@ -165,7 +202,6 @@ a {
 }
 
 .profile_bg {
-    margin-top:50px;
     z-index:1;
     background-color: rgb(100,100,100);
     padding: 50px;
@@ -182,11 +218,26 @@ a {
     margin:0px;
     padding:0px;
     border:0px;
+    border-radius:0px;
 }
 
-.navbar-fixed-top {
-    background-color: rgb(220,220,220);
+.nav-top {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffb7ac+0,73e5d0+100 */
+    background: rgb(255,183,172); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgb(255,183,172) 0%, rgb(115,229,208) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(255,183,172)), color-stop(100%,rgb(115,229,208))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgb(255,183,172) 0%,rgb(115,229,208) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgb(255,183,172) 0%,rgb(115,229,208) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgb(255,183,172) 0%,rgb(115,229,208) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgb(255,183,172) 0%,rgb(115,229,208) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb7ac', endColorstr='#73e5d0',GradientType=1 ); /* IE6-9 */
+    color: white;
     }
+    
+.nav-bottom {
+    background-color: white;
+    }
+
 
 .navbar-nav a{
     color: rgb(100,100,100);
@@ -206,14 +257,26 @@ a {
     padding-left: 10px;
 }
 
+.e_heade_name {
+    font-size: 30px;
+    text-align: center;
+    padding: 30px 30 20px 0px;
+    color: white;
+}
+
+
+
 .reco{
     height: 100%;
     background-color: rgb(220,220,220);
-    padding: 10px 50px 10px 50px;
+    padding: 30px 50px 10px 50px;
 }
 
+.first_div{
+    margin-top:300px;
+    } 
+
 .product_div{
-    max-width: 400px;
     padding: 30px;
 }
 
@@ -221,12 +284,20 @@ a {
     background-color: white;
     height: 100%;
     border-radius: 6px;
-    padding: 5px 0px 0px 0px;
+    padding: 15px 0px 10px 0px;
 }
 
+.product_crop{
+    text-align:center;
+    margin: auto;
+    width: 230px;
+    height: 180px;
+    padding: 0px ;
+    overflow : hidden;
+    }
+    
 .product_img{
-    margin-top: expression(( 150 - this.height ) / 2);
-    width: 100%;
+    position: relative;
 }
 
 .product_name{
@@ -247,9 +318,9 @@ a {
 }
 
 .product_select {
-    font-size: 30px;
+    font-size: 12px;
     text-align:center;
-    padding:0px;
+    padding: 5px;
     height: 100%;
     color: rgb(100,100,100);
     background: white;
@@ -257,7 +328,7 @@ a {
 
 
 .product_span {
-    padding: 12px 2px 12px 2px;
+    padding: 12px 2px 0px 2px;
     font-size: 12px;
     text-align:center;
     color:rgb(100,100,100) ;
@@ -267,7 +338,14 @@ a {
 .select {
     height: 100%;
     background-color: rgb(255,183,172);
-    padding: 10px 50px 10px 50px;}
+    padding: 10px 50px 10px 50px;
+    }
+    
+.already{
+    height: 100%;
+    background-color: rgb(220,220,220);
+    padding: 10px 50px 100px 50px;
+    }
 
 .ellip {
       white-space:nowrap;
@@ -276,27 +354,15 @@ a {
 }
    
 
-/*my_evalue*/
-
-.page_logo{
-    width:50%;
-    margin-top:0%;
+.dropdown{
+     border-radius: 2px;
+     color:white;
+     background-color:#c0c0c0;
+     width:150px;
 }
 
-.container_eval{
-   background-color: #FFB7AC; 
-   width:100%;
-   padding:50px;
-   margin:0 auto;
-}
-
-.box_eval{
-    margin-top:10%;
-    width:60%;
-}
-
-.eval_box{
-    margin-left:5%;
+.drop{
+    text-align:center;
 }
 
 
@@ -308,4 +374,53 @@ a {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+
+
+.heart-dislike{
+    background-image: url(asset-path('heart_broken.png'));
+    content:url('assets/images/bg1.png');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.heart-like{
+    background-image: url(asset-path('heart_fill.png'));
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.heart-empty{
+    background-image: url(asset-path('heart_empty.png'));
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.bookmark{
+    background-image: url(asset-path('bookmark.png'));
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-top: -20px;
+}
+
+.bookmark-empty{
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-top: -20px;
 }
