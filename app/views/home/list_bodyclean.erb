@@ -1,184 +1,109 @@
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<!-- main menu -->
-<a href="/users/sign_in">
-	<%=image_tag( "home.png", :class=> "home_logo") %></a>
-<nav id="navbar" class="navbar navbar-fixed-top nav-top">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-4 col-sm-3 col-xs-6"></div>
-			<div class="col-md-4 col-sm-8 col-xs-6">
-				<div class="navbar-center">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="evalpage">Smelling</a></li>
-						<li>
-							<a href="mypage">
-								<%=@user.email%>
-							</a>
-						</li>
-						<li><a href='/users/sign_out'> Log out </a> </li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-1"></div>
-		</div>
-	</div>
-</nav>
-<!-- main menu end -->
+  <ul class="nav nav-tabs navbar-fixed-top navbar-default">
+  <li role="presentation" >  <a href="evalpage">  평가늘리기 </a>  </li>
+  <li role="presentation" class="pull-center" > <a href="/home/list_bodyclean"> 바디클렌저 </a> </li>
+  
+    <li role="presentation" class="pull-right"> <a href='/users/sign_out'> 로그아웃 </a> </li>
+  <li role="presentation" class="pull-right"> <a href="mypage"> <%=@user.email%>  </a> </li>
+	</ul>
 
-<div class="row">
-	<br>
-	<br><br>
-	<br>
-	<br><br>
+<br/><br/>
+<h1 class="text-center">Smellow</h1>
+<br/>
+<div class="container">
+
+	<% @products.each do |product| %>
+		<%= if product.category == '바디클렌저' %>
+		<div class="col-sm-6 col-md-3" product-id="<%= product.id %>">
+			<div class="thumbnail">
+				<img src="<%=product.imglink %>" alt="...">
+				<div class="caption">
+					<p class="text-center"><span><%= product.brand %></span></p>
+					<p class="text-center ellip"><span><%= product.name %></span></p>
+					<p id="product-<%= product.id %>" class="text-center">
+        	<a class="btn btn-default btn-rate rate-like" role="button">좋아함</a> 
+        	<a class="btn btn-default btn-rate rate-soso" role="button">보통</a> 
+        	<a class="btn btn-default btn-rate rate-dislike" role="button">싫어함</a>
+        	</p>
+      	</div>
+    	</div>
+  	</div>
+  <% end %>
+
+       
+	<% end %>
+
 	
-	<div class="dropdown">
-	  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-	    상품 종류
-	    <span class="caret"></span>
-	  </button>
-	  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	    <li><a href="bodyclean">바디클렌저</a></li>
-	    <li><a href="http://facebook.com">비누</a></li>
-	    <li><a href="http://facebook.com">핸드크림</a></li>
-	    <li><a href="#">샴푸/컨디셔너/트리트먼트</a></li>
-	    <li><a href="#">남자향수</a></li>
-	    <li><a href="#">여자향수</a></li>
-	    <li><a href="#">방향제</a></li>
-	    <li><a href="#">양키캔들</a></li>
-	  </ul>
-	</div>
 </div>
 
 
-<div class="tab-content container-fluid">
-	<div role="tabpanel" class="tab-pane fade in active" id="tab-home">
-		<div class="row reco">
-			<div class="col-md-12">
-				<% @products.sort_by{rand}.each do |product| %>
-					<div class="col-sm-6 col-md-3 product_div" product-id="<%= product.id %>">
-						<div class="col-md-12 product_box">
-							<div class="col-md-3 product_select"><span class="heart-empty"></span></div>
-							<div class="product_crop">
-							<img class="product_img" src="<%=product.imglink %>" onerror="if (this.src != 'https://edbacker.com/themes/edbacker/images/no-image.png') this.src = 'https://edbacker.com/themes/edbacker/images/no-image.png';">
-							</div>
-							<div class="caption">
-								<!--<p class="text-center"><span><%= product.brand %></span></p>-->
-								<div class="col-md-12 product_name ellip"><span><%= product.name %></span></div>
-								<p id="product-<%= product.id %>" class="text-center">
-									<a class="col-md-6 eval_bt btn btn-rate rate-like" style="border-radius: 0px;" role="button">좋아함</a>
-									<a class="col-md-6 eval_bt btn btn-rate rate-dislike" style="border-radius: 0px;" role="button">싫어함</a>
-									<a class="col-md-6 product_span btn btn-rate rate-wish" role="button"><span class="glyphicon glyphicon-bookmark"></span><br>관심취향</a>
-									<div class="col-md-6 product_span"><span class="glyphicon glyphicon-user"></span><br>코멘트보기</div>
-								</p>
-							</div>
-						</div>
-					</div>
-				<% end %>
-			</div>
-		</div>
-	</div>
-</div>
+<style>
+	.ellip {
+      white-space:nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+</style>
 
 
 
+<script type="text/javascript">
+
+	<% @evaluations.each do |evaluation| %>
+		var parent = document.getElementById("product-<%= @products.find(evaluation.product_id).id%>");
+		<% if evaluation.rate == 1%>
+			parent.querySelector(".rate-like").className += " active";
+		<% elsif evaluation.rate == 0%>
+			parent.querySelector(".rate-soso").className += " active";
+		<% elsif evaluation.rate == -1%>
+			parent.querySelector(".rate-dislike").className += " active";
+		<% end %>
+	<% end %>
+
+	
+
+	
+
+
+	$(".rate-like").click(function(event) {
+		postRate(event, 1);
+  	});
+
+	$(".rate-soso").click(function() {
+  		postRate(event, 0)
+	});
+
+	$(".rate-dislike").click(function() {
+		postRate(event, -1)
+	});
+
+	function postRate(event, score){
+		var button = $(event.target);
+		var allbuttons = $(event.target).parent().children("a");
+		var evarcard =  $(event.target).parent().parent().parent().parent();
+		var productid= evarcard[0].getAttribute('product-id')
+  		event.preventDefault();
+  		$.ajax({
+  			type: "POST",
+  			url: "/evalrate",
+  			data: { user_id: "<%=@user.id%>", product_id: productid, rate: score },
+  			success: function(result) {
+  				allbuttons.removeClass("active");
+  				button.addClass("active");
+    		}
+    	});
+
+	}
+
+
+	
+
+	
+
+</script>
 
 
 
-
-			<script type="text/javascript">
-			
-
-					$(".rate-like").click(function(event) {
-						postRate(event, 1);
-					});
-
-				$(".rate-soso").click(function() {
-					postRate(event, 0)
-				});
-
-				$(".rate-dislike").click(function() {
-					postRate(event, -1)
-				});
-
-				$(".rate-wish").click(function() {
-					postRate(event, 5)
-				});
-
-
-
-				$('.dropdown-toggle').dropdown()
-
-
-
-				function postRate(event, score) {
-					var button = $(event.target);
-					var allbuttons = $(event.target).parent().children("a");
-					var heart = $(event.target).parent().parent().parent().children(".product_select").children("span");
-					var evarcard = $(event.target).parent().parent().parent().parent();
-					var productid = evarcard[0].getAttribute('product-id')
-					event.preventDefault();
-					$.ajax({
-						type: "POST",
-						url: "/evalrate",
-						data: {
-							user_id: "<%=@user.id%>",
-							product_id: productid,
-							rate: score
-						},
-						success: function(result) {
-							var isCanceling = button.hasClass("active");
-							allbuttons.removeClass("active");
-							if (isCanceling) {
-								heart.removeClass();
-								heart.addClass("heart-empty");
-								$("#click-cancel").removeClass("in").show();
-								$("#click-cancel").delay(1000).addClass("in").fadeOut(500);
-							}
-							else {
-								button.addClass("active");
-								
-								if(score == 1){
-									heart.removeClass();
-									heart.addClass("heart-like");
-								}
-								else if(score == -1){
-									heart.removeClass();
-									heart.addClass("heart-dislike");
-								}
-								else if(score == 5){
-									heart.removeClass();
-									heart.addClass("heart-empty");
-								}
-								$("#click-save").removeClass("in").show();
-								$("#click-save").delay(1000).addClass("in").fadeOut(500);
-							}
-						}
-					});
-
-				}
-			</script>
-
-			<div id="click-save" class="alert-click fade" role="alert">
-				<strong>저장되었습니다.</strong>
-			</div>
-			<div id="click-cancel" class="alert-click fade" role="alert">
-				<strong>취소되었습니다.</strong>
-			</div>
-
-
-			<style>
-
-			   
-				.alert-click {
-					position: fixed;
-					top: 10%;
-					left: 45%;
-					width: 10%;
-					text-align: center;
-					border-radius: 6px;
-					background-color: black;
-				}
-			</style>

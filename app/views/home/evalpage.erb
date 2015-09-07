@@ -2,12 +2,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<div class="navbar-fixed-top">
 
-  <!-- main menu -->
+
+<!-- main menu -->
   <a href="/users/sign_in">
     <%=image_tag( "home.png", :class=> "home_logo") %></a>
-  <nav id="navbar" class="navbar nav-top">
+  <nav id="navbar" class="navbar nav-top navbar-fixed-top">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-8 col-sm-3 col-xs-6"></div>
@@ -29,45 +29,16 @@
     </div>
   </nav>
   <!-- main menu end -->
-
-  <!-- user index -->
+  
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12 profile_bg">
-
-        <div class="col-md-4"></div>
-        <div class="col-md-4 profile_div">
-          <img class="img-circle profile_img" src="https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s320x320/e15/11313370_1434376700214927_1359520543_n.jpg">
-          <br>
-          <br>
-          <%=@user.email%>
-        </div>
-        <div class="col-md-4"></div>
-
-        <!--%= image_tag("background.jpg", :class => "profile_bg_img") %-->
-      </div>
-    </div>
+  	<div class="row profile_bg" style="font-size:40px; text-align:center;">
+  	Smelling
+  	</div>
   </div>
-  <!-- user index end -->
-
-  <!-- low menu -->
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="main_head">
-            Smelling
-          </div>
-        </div>
-      </div>
-    </div>
-  <!-- low menu end -->
-
-</div>
-<!-- fixed end-->
 
 
 <div class="container-fluid">
-<div class="row reco first_div">
+<div class="row reco">
  <div class="col-md-12">
   <!--<div class="col-md-12 e_heade_name">Smelling</div>-->
  	<div class="row">
@@ -78,19 +49,24 @@
 	    <span class="caret"></span>
 	    </button>
 	  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	    <li type=""><a href="">바디클렌저</a></li>
-	    <li><a href="http://facebook.com">비누</a></li>
-	    <li><a href="http://facebook.com">핸드크림</a></li>
-	    <li><a href="#">샴푸/컨디셔너/트리트먼트</a></li>
-	    <li><a href="#">남자향수</a></li>
-	    <li><a href="#">여자향수</a></li>
-	    <li><a href="#">방향제</a></li>
-	    <li><a href="#">양키캔들</a></li>
+	  	<li><a href="/evalpage">전체보기</a></li>
+			<li role="separator" class="divider"></li>
+	    <li><a href="/evalpage?category=bodyclean">바디클렌저</a></li>
+	    <li><a href="/evalpage?category=soap">비누</a></li>
+	    <li><a href="/evalpage?category=handcream">핸드크림</a></li>
+	    <li><a href="/evalpage?category=shampoo">샴푸/컨디셔너</a></li>
+	    <li><a href="/evalpage?category=manp">남자향수</a></li>
+	    <li><a href="/evalpage?category=womanp">여자향수</a></li>
+	    <li><a href="/evalpage?category=diff">방향제</a></li>
+	    <li><a href="/evalpage?category=candle">양키캔들</a></li>
 	  </ul>
 	</div>
    </div>
  </div>
 </div>
+<br>
+<br>
+<br><br><br>
 
 
 <div class="tab-content container-fluid">
@@ -100,9 +76,11 @@
 				<% @products.sort_by{rand}.each do |product| %>
 					<div class="col-sm-6 col-md-3 product_div" product-id="<%= product.id %>">
 						<div class="col-md-12 product_box">
-							<div class="col-md-3 product_select"><span class="heart-empty"></span></div>
-							<div class="col-md-6"></div>
-							<div class="col-md-3 product_wish"><span class="bookmark-empty"></span></div>
+							<div class="col-md-12 product_mark">
+								<div class="col-md-3 product_select"><span class="heart-empty"></span></div>
+								<div class="col-md-6"></div>
+								<div class="col-md-3 product_wish"><span class="bookmark-empty"></span></div>
+							</div>
 							<div class="product_crop">
 							<img class="product_img" src="<%=product.imglink %>" onerror="if (this.src != 'http://golsonsonline.com/catalog/view/theme/Golsons/image/cat_not_found.png') 
 							this.src = 'http://golsonsonline.com/catalog/view/theme/Golsons/image/cat_not_found.png';">
@@ -160,8 +138,8 @@
 				function postRate(event, score) {
 					var button = $(event.target);
 					var allbuttons = $(event.target).parent().children("a");
-					var heart = $(event.target).parent().parent().parent().children(".product_select").children("span");
-					var bookmark = $(event.target).parent().parent().parent().children(".product_wish").children("span");
+					var heart = $(event.target).parent().parent().parent().children(".product_mark").children(".product_select").children("span");
+					var bookmark = $(event.target).parent().parent().parent().children(".product_mark").children(".product_wish").children("span");
 					var evarcard = $(event.target).parent().parent().parent().parent();
 					var productid = evarcard[0].getAttribute('product-id')
 					event.preventDefault();
@@ -194,13 +172,19 @@
 								
 								if(score == 1){
 									heart.removeClass();
+									bookmark.removeClass();
+									bookmark.addClass("bookmark-empty");
 									heart.addClass("heart-like");
 								}
 								else if(score == -1){
 									heart.removeClass();
+									bookmark.removeClass();
+									bookmark.addClass("bookmark-empty");
 									heart.addClass("heart-dislike");
 								}
 								else if(score == 5){
+									heart.removeClass();
+									heart.addClass("heart-empty");
 									bookmark.addClass("bookmark")
 								}
 								$("#click-save").removeClass("in").show();
@@ -225,11 +209,12 @@
 			   
 				.alert-click {
 					position: fixed;
-					top: 10%;
+					top: 40%;
 					left: 45%;
 					width: 10%;
 					text-align: center;
 					border-radius: 6px;
 					background-color: black;
+					z-index:1000;
 				}
 			</style>

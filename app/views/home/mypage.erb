@@ -1,9 +1,9 @@
-<div class="navbar-fixed-top">
+
 
   <!-- main menu -->
   <a href="/users/sign_in">
     <%=image_tag( "home.png", :class=> "home_logo") %></a>
-  <nav id="navbar" class="navbar nav-top">
+  <nav id="navbar" class="navbar nav-top navbar-fixed-top">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-8 col-sm-3 col-xs-6"></div>
@@ -33,7 +33,7 @@
 
         <div class="col-md-4"></div>
         <div class="col-md-4 profile_div">
-          <img class="img-circle profile_img" src="https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s320x320/e15/11313370_1434376700214927_1359520543_n.jpg">
+          <%=image_tag( "person.png", :class=> "img-circle profile_img") %>
           <br>
           <br>
           <%=@user.email%>
@@ -66,11 +66,11 @@
   </nav>
   <!-- low menu end -->
 
-</div>
+
 <!-- fixed end-->
 
 <div class="container-fluid" id="recommand">
-  <div class="row reco first_div">
+  <div class="row reco">
     <div class="col-md-12 header_name">추천 취향</div>
     <div class="col-md-12">
       <div class="col-md-3 product_div">
@@ -117,8 +117,6 @@
             <div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
               <br> 코멘트보기
             </div>
-
-
           </div>
         </div>
         <% end %>

@@ -11,10 +11,31 @@ class HomeController < ApplicationController
 			@user = User.find(current_user.id)
 			@evaluations = Evaluation.where(user_id: @user.id)
 			@products = Product.all
+			
 			@evaluations.each do |evaluation|
 				if evaluation.rate != 5
 	 				@products = @products.where.not(id: evaluation.product_id)
 	 			end
+			end
+			
+			if params[:category].nil?
+				@products
+			elsif params[:category] == 'soap'
+				@products = @products.where(category: '비누')
+			elsif params[:category] == 'bodyclean'
+				@products = @products.where(category: '바디클렌저')
+			elsif params[:category] == 'handcream'
+				@products = @products.where(category: '핸드크림')
+			elsif params[:category] == 'shampoo'
+				@products = @products.where(category: '샴푸/컨디셔너/트리트먼트')
+			elsif params[:category] == 'manp'
+				@products = @products.where(category: '남자향수')
+			elsif params[:category] == 'womanp'
+				@products = @products.where(category: '여자향수')
+			elsif params[:category] == 'diff'
+				@products = @products.where(category: '방향제')
+			elsif params[:category] == 'candle'
+				@products = @products.where(category: '양키캔들')
 			end
     	end
 		
