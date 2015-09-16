@@ -5,7 +5,7 @@
 
 
 <!-- main menu -->
-  <a href="/users/sign_in">
+  <a href="/">
     <%=image_tag( "home.png", :class=> "home_logo") %></a>
   <nav id="navbar" class="navbar nav-top navbar-fixed-top">
     <div class="container-fluid">
@@ -14,10 +14,10 @@
         <div class="col-md-4 col-sm-8 col-xs-6">
           <div class="navbar-center">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="evalpage">Smelling</a></li>
+              <li class="active"><a href="evalpage">향 평가하기</a></li>
               <li>
                 <a href="mypage">
-                  <%=@user.email%>
+                  나의 취향 보기
                 </a>
               </li>
               <li><a href='/users/sign_out'> Log out </a> </li>
@@ -31,10 +31,21 @@
   <!-- main menu end -->
   
   <div class="container-fluid">
-  	<div class="row profile_bg" style="font-size:40px; text-align:center;">
-  	Smelling
-  	</div>
+  	<div class="row" style="font-size:15px; text-align:center; color:rgb(100,100,100);">
+  		<div class="bg_crop"><%=image_tag( "bg2.png", :width => "100%" ,:class => "img_bg2") %></div>
+  		<div class="col-md-12 eval_head">
+  			<h2>Smelling</h2>
+	  	 	<div class="progress-custom">
+		  	 	<div class="progressbar-custom" role="progressbar" style="width: <%= @evaluations.where.not(rate: 5).count*2 %>%;">
+		  	 	</div>
+				</div>
+				<%= @evaluations.where.not(rate: 5).count %>개의 향을 평가 했어요
+			</div>
+		
   </div>
+  </div>
+  
+  
 
 
 <div class="container-fluid">
@@ -77,8 +88,8 @@
 					<div class="col-sm-6 col-md-3 product_div" product-id="<%= product.id %>">
 						<div class="col-md-12 product_box">
 							<div class="col-md-12 product_mark">
-								<div class="col-md-3 product_select"><span class="heart-empty"></span></div>
-								<div class="col-md-6"></div>
+								<!--<div class="col-md-3 product_select"><span class="heart-empty"></span></div>-->
+								<div class="col-md-9"></div>
 								<div class="col-md-3 product_wish"><span class="bookmark-empty"></span></div>
 							</div>
 							<div class="product_crop">
@@ -89,9 +100,12 @@
 								<!--<p class="text-center"><span><%= product.brand %></span></p>-->
 								<div class="col-md-12 product_name ellip"><span><%= product.name %></span></div>
 								<p id="product-<%= product.id %>" class="text-center">
-									<a class="col-md-6 eval_bt btn btn-rate rate-like" style="border-radius: 0px;" role="button">좋아함</a>
-									<a class="col-md-6 eval_bt btn btn-rate rate-dislike" style="border-radius: 0px;" role="button">싫어함</a>
-									<a class="col-md-6 product_span btn btn-rate rate-wish" role="button"><span class="glyphicon glyphicon-bookmark"></span><br>관심취향</a>
+									<span class="smellow-rate rate-1" data-toggle="tooltip" data-placement="bottom" title="최악이에요!"></span>
+									<span class="smellow-rate rate-2" data-toggle="tooltip" data-placement="bottom" title="별로에요"></span>
+									<span class="smellow-rate rate-3" data-toggle="tooltip" data-placement="bottom" title="보통이에요"></span>
+									<span class="smellow-rate rate-4" data-toggle="tooltip" data-placement="bottom" title="좋아요"></span>
+									<span class="smellow-rate rate-5" data-toggle="tooltip" data-placement="bottom" title="최고에요!"></span>
+									<a class="col-md-6 product_span btn btn-rate rate-wish" role="button"><span class="glyphicon glyphicon-bookmark"></span><br>써볼래</a>
 									<div class="col-md-6 product_span"><span class="glyphicon glyphicon-user"></span><br>코멘트보기</div>
 								</p>
 							</div>
@@ -110,20 +124,54 @@
 
 
 
+
 			<script type="text/javascript">
+				$(document).ready(function(){
+					$('[data-toggle="tooltip"]').tooltip(); 
+					
+				});
 			
-
-				$(".rate-like").click(function(event) {
-					postRate(event, 1);
+				$(".smellow-rate").click(function(event){
+					if($(event.target).hasClass("rate-1")){
+						
+					} else if($(event.target).hasClass("rate-2")){
+						
+					} else if($(event.target).hasClass("rate-3")){
+						
+					} else if($(event.target).hasClass("rate-4")){
+						
+					} else if($(event.target).hasClass("rate-5")){
+						
+					}
 				});
-
-				$(".rate-soso").click(function() {
-					postRate(event, 0)
+				
+				$(".smellow-rate").mouseenter(function(event) {
+					if($(event.target).hasClass("rate-1")){
+						$(event.target).addClass("smellow-rate-hover");
+					} else if($(event.target).hasClass("rate-2")){
+						$(event.target).parent().children(".rate-1").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-2").addClass("smellow-rate-hover");
+					} else if($(event.target).hasClass("rate-3")){
+						$(event.target).parent().children(".rate-1").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-2").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-3").addClass("smellow-rate-hover");
+					} else if($(event.target).hasClass("rate-4")){
+						$(event.target).parent().children(".rate-1").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-2").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-3").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-4").addClass("smellow-rate-hover");
+					} else if($(event.target).hasClass("rate-5")){
+						$(event.target).parent().children(".rate-1").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-2").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-3").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-4").addClass("smellow-rate-hover");
+						$(event.target).parent().children(".rate-5").addClass("smellow-rate-hover");
+					}
+				}).mouseleave(function(event){
+					$(event.target).parent().children().removeClass("smellow-rate-hover");
 				});
-
-				$(".rate-dislike").click(function() {
-					postRate(event, -1)
-				});
+			
+			
 
 				$(".rate-wish").click(function() {
 					postRate(event, 5)
@@ -218,3 +266,34 @@
 					z-index:1000;
 				}
 			</style>
+			
+			
+			<!-- footer -->
+<div class="row container-fluid-gray">
+  <div class="col-md-12">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 foot_t">
+    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true">&nbsp;top</span></div></a>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<!-- footer -->  
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 80 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        } );
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+          return false;
+        } );
+      } );
+    </script>
+

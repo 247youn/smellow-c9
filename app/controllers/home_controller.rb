@@ -73,7 +73,9 @@ class HomeController < ApplicationController
 			evaluations_of_user = Evaluation.where(user_id: user.id)
 			evaluations_of_user.each do |evaluation_of_user|
 				product_name = evaluation_of_user.product_id
+				product_rate = evaluation_of_user.rate
 				arr_product_of_user.push(product_name)
+				arr_product_of_user.push(product_rate)
 			end
 			@hash_users[user.email]=arr_product_of_user
 		end

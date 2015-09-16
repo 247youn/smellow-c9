@@ -1,9 +1,8 @@
 
 
-
 <div class="container-fluid-pink" id="login-bg">
   <%= image_tag("bg3.png", :class => "bg_logo") %>
-  <div class="row-high" style="z-index:999;">
+  <div class="row-high" style="z-index:995;">
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-4"></div>
@@ -11,6 +10,7 @@
         <div class="col-md-4"></div>
       </div>
     </div>
+    
     
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     
@@ -37,6 +37,7 @@
       </div>
     <!--</div>-->
     <% end %><!-- form 끝 -->
+ 
     
       <div class="row">
         <div class="col-md-12 ">
@@ -55,45 +56,44 @@
 </div>
 
 
+<!-- footer -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 foot_t">
+    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true">&nbsp;top</span></div></a>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<!-- footer -->  
 
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 80 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        } );
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+          return false;
+        } );
+      } );
+    </script>
 
-<script>
-jQuery(function () { 
-	$("body").click(function(){
-		$(".img_bg_left").animate({
-			opacity: 0,
-			left: "-=400",
-			bottom: "100%"
-		}, 2000, function() {
-		  $(".img_bg_left").remove();
-		    
-});
-		$(".img_bg_right").animate({
-			opacity: 0,
-			right: "-=400",
-			top: "100%"
-		}, 2000, function() {
-		  
-		  $(".img_bg_right").remove();
-		  
-});
-  $(".main_logo").animate({
-			opacity: 0
-		}, 2000, function() {
-		  
-		  $(".main_logo").remove();
-		  
-});
-
-
-	});
-
-});
-
-</script>
+<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 
 
 
+
+
+
+<!-- facebook
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -111,3 +111,9 @@ jQuery(function () {
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+ --> 
+
+
+
+
+

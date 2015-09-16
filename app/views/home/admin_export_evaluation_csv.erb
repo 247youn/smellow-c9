@@ -24,7 +24,21 @@
 			    <% @hash_users.each do |user| %>
 			    <tr>
 					<th style="text-align:center">&nbsp;<%= user[0] %>&nbsp;</th>
-					<th style="text-align:center">&nbsp;
+					<th style="text-align:center" colspan="3">
+						<% sibal = user[1] %>
+						<%= sibal %>
+						<% i = 0 %>
+						<% while i < sibal.length %>
+							<% if i%2 == 0 %>
+								
+							<% else %>
+								<%= sibal[i] %>
+						
+							<% end %>
+							<%i = i+1 %>
+						<% end %>
+					</th>
+						<%= sibal[0] %>
 						<% user[1].each do |product| %>
 							<%= product %>,
 						<% end %> 

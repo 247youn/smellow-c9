@@ -10,10 +10,10 @@
         <div class="col-md-4 col-sm-8 col-xs-6">
           <div class="navbar-center">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="evalpage">Smelling</a></li>
+              <li class="active"><a href="/evalpage">향 평가하기</a></li>
               <li>
                 <a href="mypage">
-                  <%=@user.email%>
+                  나의 취향 보기
                 </a>
               </li>
               <li><a href='/users/sign_out'> Log out </a> </li>
@@ -31,14 +31,26 @@
     <div class="row">
       <div class="col-md-12 profile_bg">
 
-        <div class="col-md-4"></div>
-        <div class="col-md-4 profile_div">
-          <%=image_tag( "person.png", :class=> "img-circle profile_img") %>
-          <br>
-          <br>
-          <%=@user.email%>
+        <div class="col-md-2 col-sm-1 col-xs-1"></div>
+        <div class="col-md-8 col-sm-10 col-xs-10 profile_div">
+          <div class="profile_lcr_a">
+            <%=image_tag( "person.png", :class=> "img-circle profile_img") %>
+            <br>
+            <br>
+            <%=@user.email%>
+          </div>
+          <div class="col-md-12 profile_lcr">
+            <div class="col-md-1 col-sm-2 col-xs-2 profile_l">
+              <span class="glyphicon glyphicon-heart"></span>
+            </div>
+            <div class="col-md-10 col-sm-8 col-xs-8 profile_c"></div>
+            <div class="col-md-1 col-sm-2 col-xs-2 profile_r">
+              <span class="glyphicon glyphicon-bookmark"></span>
+            </div>  
+          </div>
+          
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-2 col-sm-1 col-xs-1"></div>
 
         <!--%= image_tag("background.jpg", :class => "profile_bg_img") %-->
       </div>
@@ -55,7 +67,7 @@
           <div class="navbar-center">
             <ul class="nav navbar-nav">
               <li role="presentation"><a href="#recommand">추천 취향</a></li>
-              <li role="presentation"><a href="#wish">맡고 싶은 향</a></li>
+              <li role="presentation"><a href="#wish">써 볼래</a></li>
               <li role="presentation"><a href="#already">맡아 본 향</a> </li>
             </ul>
           </div>
@@ -102,7 +114,7 @@
 
 <div class="container-fluid">
   <div class="row select">
-    <div class="col-md-12 header_name" id="wish">맡고 싶은 향</div>
+    <div class="col-md-12 header_name" id="wish">써 볼래 </div>
     <div class="col-md-12">
       <% @evaluations.where(rate: 5).each do |evaluation| %>
         <div class="col-md-3 product_div">
@@ -113,7 +125,7 @@
             <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></div>
           <div class="col-md-12 product_name ellip"><%= @products.find(evaluation.product_id).name %></div>
           <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span>
-              <br>관심취향</div>
+              <br>써볼래</div>
             <div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
               <br> 코멘트보기
             </div>
@@ -143,13 +155,24 @@
               <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></div>
               <div class="col-md-12 product_name ellip"><%= @products.find(evaluation.product_id).name %></div>
               <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span>
-                <br>관심취향</div>
-              <div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
-                <br> 코멘트보기
+                <br>써볼래</div>
+              <!--<div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
+                <br> 코멘트보기 -->
+              <div class="col-md-6 product_span" type="button" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
+                <br> 코멘트보기 
               </div>
             </div>
           </div>
           <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12" style="padding:0px;">
+        <div class="col-md-6 s_crop"><%=image_tag( "winter.png", :class => "season") %></div>
+        <div class="col-md-6"></div>
       </div>
     </div>
   </div>
@@ -187,6 +210,8 @@
       </div>
     </div>
   </div>
+  
+  
 
   <script>
     $('#myModal').on('show.bs.modal', function(event) {
@@ -231,4 +256,33 @@
     }
   </script>
 
+
+<!-- footer -->
+<div class="row container-fluid-gray">
+  <div class="col-md-12">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 foot_t">
+    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true">&nbsp;top</span></div></a>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<!-- footer -->  
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 80 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        } );
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+          return false;
+        } );
+      } );
+    </script>
 

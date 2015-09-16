@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root :to => 'home#index'
   match ":controller(/:action(/:id))", :via => [:post, :get]
   
-  
   get '/evalpage' => 'home#evalpage'
   get '/mypage'=>'home#mypage'
   post '/evalrate' => 'home#evalrate'
@@ -14,7 +13,7 @@ Rails.application.routes.draw do
   
   post '/postcomment' => 'home#post_comment'
   
-  
+
   
      
      #post '/evalrate' => 'home#evalrate'
