@@ -1,7 +1,7 @@
 
 
   <!-- main menu -->
-  <a href="/users/sign_in">
+  <a href="/">
     <%=image_tag( "home.png", :class=> "home_logo") %></a>
   <nav id="navbar" class="navbar nav-top navbar-fixed-top">
     <div class="container-fluid">
@@ -37,15 +37,18 @@
             <%=image_tag( "person.png", :class=> "img-circle profile_img") %>
             <br>
             <br>
-            <%=@user.email%>
+            <%=@user.email%><br>
+            <%= @evaluations.where.not(rate: 0).count + @evaluations.where(rate: 0).count %> 개를 평가했어요
           </div>
           <div class="col-md-12 profile_lcr">
             <div class="col-md-1 col-sm-2 col-xs-2 profile_l">
-              <span class="glyphicon glyphicon-heart"></span>
+              <span class="glyphicon glyphicon-heart profile_span"></span><br>
+              <%= @evaluations.where.not(rate: 0).count %>
             </div>
             <div class="col-md-10 col-sm-8 col-xs-8 profile_c"></div>
             <div class="col-md-1 col-sm-2 col-xs-2 profile_r">
-              <span class="glyphicon glyphicon-bookmark"></span>
+              <span class="glyphicon glyphicon-bookmark profile_span"></span><br>
+              <%= @evaluations.where(rate: 0).count %>
             </div>  
           </div>
           
@@ -58,75 +61,46 @@
   </div>
   <!-- user index end -->
 
-  <!-- low menu -->
-  <nav id="navbar" class="navbar nav-bottom">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-8 col-sm-3 col-xs-6"></div>
-        <div class="col-md-4 col-sm-8 col-xs-6">
-          <div class="navbar-center">
-            <ul class="nav navbar-nav">
-              <li role="presentation"><a href="#recommand">추천 취향</a></li>
-              <li role="presentation"><a href="#wish">써 볼래</a></li>
-              <li role="presentation"><a href="#already">맡아 본 향</a> </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-1"></div>
-      </div>
-    </div>
-  </nav>
-  <!-- low menu end -->
-
 
 <!-- fixed end-->
 
-<div class="container-fluid" id="recommand">
-  <div class="row reco">
-    <div class="col-md-12 header_name">추천 취향</div>
-    <div class="col-md-12">
-      <div class="col-md-3 product_div">
-        <div class="col-md-12 product_box">
-          <div class="product_crop">
-          <img class="product_img" src="http://itemimage.cjmall.com/goods_images/32/890/32384890M.jpg">
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12" style="padding:0px; margin-bottom:-10px">
+        <div class="col-md-12 season_div" >
+          <div class="col-md-4"></div>
+          <div class="col-md-1 season">
+          <%=image_tag( "spring.png", :class => "season_img") %></div>
+            <div class="col-md-1 season">
+            <%=image_tag( "summer.png", :class => "season_img") %>
+            </div>
+            <div class="col-md-1 season" style="opacity:1.0;">
+            <%=image_tag( "fall.png", :class => "season_img") %></div>
+            <div class="col-md-1 season">
+            <%=image_tag( "winter.png", :class => "season_img") %></div>
+            <div class="col-md-4"></div>          
           </div>
-          <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></span></div>
-          <div class="col-md-12 product_name">플로라 바이 구찌 그레이셔스 튜베로즈 50ML</div>
-          <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span>
-            <br>관심취향</div>
-          <div class="col-md-6 product_span"><span class="glyphicon glyphicon-user"></span>
-            <br>코멘트보기</div>
         </div>
-      </div>
-      <div class="col-md-3 product_div">
-        <div class="col-md-12 product_box"></div>
-      </div>
-      <div class="col-md-3 product_div">
-        <div class="col-md-12 product_box"></div>
-      </div>
-      <div class="col-md-3 product_div">
-        <div class="col-md-12 product_box"></div>
       </div>
     </div>
   </div>
-</div>
 
 
 <div class="container-fluid">
-  <div class="row select">
-    <div class="col-md-12 header_name" id="wish">써 볼래 </div>
+  <div class="row already">
+    <div class="col-md-12 header_name" id="wish">WISH</div>
     <div class="col-md-12">
-      <% @evaluations.where(rate: 5).each do |evaluation| %>
+      <% @evaluations.where(:rate=> 0).each do |evaluation| %>
         <div class="col-md-3 product_div">
           <div class="col-md-12 product_box">
             <div class="product_crop">
             <img class="product_img" src="<%=@products.find(evaluation.product_id).imglink %>" alt="...">
             </div>
-            <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></div>
+           
           <div class="col-md-12 product_name ellip"><%= @products.find(evaluation.product_id).name %></div>
-          <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-bookmark"></span>
               <br>써볼래</div>
-            <div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
+            <div class="col-md-6 product_span_two" type="button" data-toggle="modal" data-target="#myModal" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
               <br> 코멘트보기
             </div>
           </div>
@@ -139,26 +113,23 @@
 
 
 
-
-
-
   <div class="container-fluid" id="already">
-    <div class="row already">
-      <div class="col-md-12 header_name">맡아 본 향</div>
+    <div class="row select">
+      <div class="col-md-12 header_name">CHECKED</div>
       <div class="col-md-12">
-        <% @evaluations.where(:rate=> -1..1).each do |evaluation| %>
+        <% @evaluations.where(:rate=> 1..5).each do |evaluation| %>
           <div class="col-md-3 product_div">
             <div class="col-md-12 product_box">
               <div class="product_crop">
               <img class="product_img" src="<%=@products.find(evaluation.product_id).imglink %>" alt="...">
               </div>
-              <div class="col-md-12 product_select"><span class="glyphicon glyphicon-heart"></div>
+             
               <div class="col-md-12 product_name ellip"><%= @products.find(evaluation.product_id).name %></div>
-              <div class="col-md-6 product_span"><span class="glyphicon glyphicon-bookmark"></span>
+              <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-bookmark"></span>
                 <br>써볼래</div>
               <!--<div class="col-md-6 product_span" type="button" data-toggle="modal" data-target="#myModal" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
                 <br> 코멘트보기 -->
-              <div class="col-md-6 product_span" type="button" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
+              <div class="col-md-6 product_span_two" type="button" data-productid="<%= @products.find(evaluation.product_id).id %>" data-name="<%= @products.find(evaluation.product_id).name %>" data-imglink="<%= @products.find(evaluation.product_id).imglink %>"><span class="glyphicon glyphicon-user"></span>
                 <br> 코멘트보기 
               </div>
             </div>
@@ -168,15 +139,70 @@
     </div>
   </div>
   
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12" style="padding:0px;">
-        <div class="col-md-6 s_crop"><%=image_tag( "winter.png", :class => "season") %></div>
-        <div class="col-md-6"></div>
+  
+  
+  <div class="container-fluid-gray" id="recommand">
+  <div class="row reco">
+    <div class="col-md-12 header_name">RECOMMAND</div>
+    <div class="col-md-12">
+    <!-- -->
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box">
+          <div class="product_crop">
+            <img class="product_img" src="http://itemimage.cjmall.com/goods_images/32/890/32384890M.jpg" alt="...">
+          </div>
+          <div class="col-md-12 product_name ellip">플로라 바이 구찌 그레이셔스 튜베로즈 50ML</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-bookmark"></span>
+            <br>관심취향</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-user"></span>
+            <br>코멘트보기</div>
+        </div>
+      </div>
+      <!-- -->
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box">
+        
+          <div class="product_crop">
+          <img class="product_img" src="http://itemimage.cjmall.com/goods_images/26/979/26467979J.jpg">
+          </div>
+          <div class="col-md-12 product_name ellip">[swagger]스웨거 남성 향수 샤워젤 룰브레이커</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-bookmark"></span>
+            <br>관심취향</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-user"></span>
+            <br>코멘트보기</div>
+        </div>
+      </div>
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box">
+          <div class="product_crop">
+          <img class="product_img" src="http://itemimage.cjmall.com/goods_images/34/396/34917396J.jpg">
+          </div>
+          <div class="col-md-12 product_name ellip">오가닉스 인텐시브 인비거레이팅 유칼립투스민트 샴푸</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-bookmark"></span>
+            <br>관심취향</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-user"></span>
+            <br>코멘트보기</div>
+        </div>
+      </div>
+      <div class="col-md-3 product_div">
+        <div class="col-md-12 product_box">
+          <div class="product_crop">
+          <img class="product_img" src="http://itemimage.cjmall.com/goods_images/35/991/35459991J.jpg">
+          </div>
+          <div class="col-md-12 product_name ellip">아로니카 센티드 리드 디퓨저 90ml-데이라이트 레몬</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-bookmark"></span>
+            <br>관심취향</div>
+          <div class="col-md-6 product_span_two"><span class="glyphicon glyphicon-user"></span>
+            <br>코멘트보기</div>
+        </div>
       </div>
     </div>
   </div>
-
+</div>
+  
+  
+  
+  
 
 
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -258,13 +284,14 @@
 
 
 <!-- footer -->
-<div class="row container-fluid-gray">
-  <div class="col-md-12">
-    <div class="col-md-4"></div>
+<div class="row">
+  <div class="col-md-12 foot_1">
+  <div class="col-md-4"></div>
     <div class="col-md-4 foot_t">
-    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true">&nbsp;top</span></div></a>
+    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"><br>top</span></div></a>
     </div>
-    <div class="col-md-4"></div>
+  <div class="col-md-4 foot_2"> created by<br>Garam An &nbsp Jina Lee &nbsp Younseok Lee &nbsp Byungmook Kim</div>
+  
   </div>
 </div>
 <!-- footer -->  
@@ -284,5 +311,4 @@
           return false;
         } );
       } );
-    </script>
-
+</script>  

@@ -36,10 +36,10 @@
   		<div class="col-md-12 eval_head">
   			<h2>Smelling</h2>
 	  	 	<div class="progress-custom">
-		  	 	<div class="progressbar-custom" role="progressbar" style="width: <%= @evaluations.where.not(rate: 5).count*2 %>%;">
+		  	 	<div class="progressbar-custom" role="progressbar" style="width: <%= @evaluations.where.not(rate: 0).count*2 %>%;">
 		  	 	</div>
 				</div>
-				<%= @evaluations.where.not(rate: 5).count %>개의 향을 평가 했어요
+				<%= @evaluations.where.not(rate: 0).count %>개의 향을 평가 했어요
 			</div>
 		
   </div>
@@ -55,9 +55,9 @@
  	<div class="row">
      <div class="col-md-3 drop">
 	  <div class="dropdown">
-	    <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	    <button style="background-color:gray;" class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 	    상품 종류 &nbsp;
-	    <span class="caret"></span>
+	    <span style="background-color:gray;" class="caret"></span>
 	    </button>
 	  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	  	<li><a href="/evalpage">전체보기</a></li>
@@ -73,8 +73,17 @@
 	  </ul>
 	</div>
    </div>
+   <div class="col-md-6"> </div>
+   <div class="col-md-3">
+   <br> <br>  <br>
+
+   </div>
  </div>
+ 
 </div>
+
+
+
 <br>
 <br>
 <br><br><br>
@@ -84,7 +93,9 @@
 	<div role="tabpanel" class="tab-pane fade in active" id="tab-home">
 		<div class="row reco">
 			<div class="col-md-12">
+				<% i = 0 %>
 				<% @products.sort_by{rand}.each do |product| %>
+					<% if i<4 %>
 					<div class="col-sm-6 col-md-3 product_div" product-id="<%= product.id %>">
 						<div class="col-md-12 product_box">
 							<div class="col-md-12 product_mark">
@@ -99,49 +110,58 @@
 							<div class="caption">
 								<!--<p class="text-center"><span><%= product.brand %></span></p>-->
 								<div class="col-md-12 product_name ellip"><span><%= product.name %></span></div>
-								<p id="product-<%= product.id %>" class="text-center">
-									<span class="smellow-rate rate-1" data-toggle="tooltip" data-placement="bottom" title="최악이에요!"></span>
-									<span class="smellow-rate rate-2" data-toggle="tooltip" data-placement="bottom" title="별로에요"></span>
-									<span class="smellow-rate rate-3" data-toggle="tooltip" data-placement="bottom" title="보통이에요"></span>
-									<span class="smellow-rate rate-4" data-toggle="tooltip" data-placement="bottom" title="좋아요"></span>
-									<span class="smellow-rate rate-5" data-toggle="tooltip" data-placement="bottom" title="최고에요!"></span>
-									<a class="col-md-6 product_span btn btn-rate rate-wish" role="button"><span class="glyphicon glyphicon-bookmark"></span><br>써볼래</a>
-									<div class="col-md-6 product_span"><span class="glyphicon glyphicon-user"></span><br>코멘트보기</div>
+								<p id="product-<%= product.id %>" product-id="<%= product.id %>" class="text-center">
+									<br>
+									<span class="smellow-rate rate-1" data-toggle="tooltip" data-placement="bottom" title="최악이에요!" style="width:7%"></span>
+									<span class="smellow-rate rate-2" data-toggle="tooltip" data-placement="bottom" title="별로에요" style="width:7%"></span>
+									<span class="smellow-rate rate-3" data-toggle="tooltip" data-placement="bottom" title="보통이에요" style="width:7%"></span>
+									<span class="smellow-rate rate-4" data-toggle="tooltip" data-placement="bottom" title="좋아요" style="width:7%"></span>
+									<span class="smellow-rate rate-5" data-toggle="tooltip" data-placement="bottom" title="최고에요!" style="width:7%"></span> <br>
+									<a class="col-md-6 product_span btn btn-rate rate-wish" role="button"> <span class="glyphicon glyphicon-bookmark"></span><br> 써볼래</a> 
+									<div class="col-md-6 product_span"><span class="glyphicon glyphicon-user"></span> <br>코멘트보기</div>
 								</p>
 							</div>
 						</div>
+						
 					</div>
+					<% end %>
+					<% i = i+1 %>
 				<% end %>
+				   	    <a class="btn drop button_right" href="/evalpage" role="button" style="font-size:35px; color:gray; float:right; margin-right:70px">
+   	    	<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+   	    </a>
 			</div>
 		</div>
+		
 	</div>
 </div>
 </div>
 
 
 
-
+<script>
+jQuery( document ).ready(function( $ ) {
+   $(".smellow-rate").tooltip();
+});
+</script>
 
 
 
 
 			<script type="text/javascript">
-				$(document).ready(function(){
-					$('[data-toggle="tooltip"]').tooltip(); 
-					
-				});
+
 			
 				$(".smellow-rate").click(function(event){
 					if($(event.target).hasClass("rate-1")){
-						
+						postRate(event, 1)
 					} else if($(event.target).hasClass("rate-2")){
-						
+						postRate(event, 2)
 					} else if($(event.target).hasClass("rate-3")){
-						
+						postRate(event, 3)
 					} else if($(event.target).hasClass("rate-4")){
-						
+						postRate(event, 4)
 					} else if($(event.target).hasClass("rate-5")){
-						
+						postRate(event, 5)
 					}
 				});
 				
@@ -174,7 +194,7 @@
 			
 
 				$(".rate-wish").click(function() {
-					postRate(event, 5)
+					postRate(event, 0)
 				});
 
 
@@ -188,8 +208,9 @@
 					var allbuttons = $(event.target).parent().children("a");
 					var heart = $(event.target).parent().parent().parent().children(".product_mark").children(".product_select").children("span");
 					var bookmark = $(event.target).parent().parent().parent().children(".product_mark").children(".product_wish").children("span");
-					var evarcard = $(event.target).parent().parent().parent().parent();
-					var productid = evarcard[0].getAttribute('product-id')
+					var evarcard = $(event.target).parent();
+					var productid = evarcard[0].getAttribute('product-id');
+					var isCanceling = button.hasClass("smellow-rate-clicked");
 					event.preventDefault();
 					$.ajax({
 						type: "POST",
@@ -200,44 +221,48 @@
 							rate: score
 						},
 						success: function(result) {
-							var isCanceling = button.hasClass("active");
-							allbuttons.removeClass("active");
-							if (isCanceling) {
-								if(score == 5){
-									bookmark.removeClass();
-									bookmark.addClass("bookmark-empty");
-								}
-								else{
-									heart.removeClass();
-									heart.addClass("heart-empty");
-								}
-								
-								$("#click-cancel").removeClass("in").show();
-								$("#click-cancel").delay(1000).addClass("in").fadeOut(500);
-							}
-							else {
-								button.addClass("active");
-								
-								if(score == 1){
-									heart.removeClass();
-									bookmark.removeClass();
-									bookmark.addClass("bookmark-empty");
-									heart.addClass("heart-like");
-								}
-								else if(score == -1){
-									heart.removeClass();
-									bookmark.removeClass();
-									bookmark.addClass("bookmark-empty");
-									heart.addClass("heart-dislike");
-								}
-								else if(score == 5){
-									heart.removeClass();
-									heart.addClass("heart-empty");
-									bookmark.addClass("bookmark")
-								}
-								$("#click-save").removeClass("in").show();
-								$("#click-save").delay(1000).addClass("in").fadeOut(500);
-							}
+
+							$(event.target).parent().children().removeClass("smellow-rate-clicked");
+							bookmark.removeClass("bookmark");
+							bookmark.addClass("bookmark-empty");
+					if (isCanceling) {			
+						$("#click-cancel").removeClass("in").show();
+						$("#click-cancel").delay(1000).addClass("in").fadeOut(500);
+						return;
+					}
+
+					if(score == 0){
+						bookmark.addClass("bookmark");
+					}
+					else{
+							bookmark.removeClass();
+							bookmark.addClass("bookmark-empty");
+							if($(event.target).hasClass("rate-1")){
+							$(event.target).addClass("smellow-rate-clicked");
+						} else if($(event.target).hasClass("rate-2")){
+							$(event.target).parent().children(".rate-1").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-2").addClass("smellow-rate-clicked");
+						} else if($(event.target).hasClass("rate-3")){
+							$(event.target).parent().children(".rate-1").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-2").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-3").addClass("smellow-rate-clicked");
+						} else if($(event.target).hasClass("rate-4")){
+							$(event.target).parent().children(".rate-1").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-2").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-3").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-4").addClass("smellow-rate-clicked");
+						} else if($(event.target).hasClass("rate-5")){
+							$(event.target).parent().children(".rate-1").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-2").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-3").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-4").addClass("smellow-rate-clicked");
+							$(event.target).parent().children(".rate-5").addClass("smellow-rate-clicked");
+						} 
+					}
+					
+							$("#click-save").removeClass("in").show();
+							$("#click-save").delay(1000).addClass("in").fadeOut(500);
+							
 						}
 					});
 
@@ -269,13 +294,14 @@
 			
 			
 			<!-- footer -->
-<div class="row container-fluid-gray">
-  <div class="col-md-12">
-    <div class="col-md-4"></div>
+<div class="row">
+  <div class="col-md-12 foot_1">
+  <div class="col-md-4"></div>
     <div class="col-md-4 foot_t">
-    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true">&nbsp;top</span></div></a>
+    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"><br>top</span></div></a>
     </div>
-    <div class="col-md-4"></div>
+  <div class="col-md-4 foot_2"> created by<br>Garam An &nbsp Jina Lee &nbsp Younseok Lee &nbsp Byungmook Kim</div>
+  
   </div>
 </div>
 <!-- footer -->  
@@ -284,7 +310,7 @@
     <script>
       $( document ).ready( function() {
         $( window ).scroll( function() {
-          if ( $( this ).scrollTop() > 80 ) {
+          if ( $( this ).scrollTop() > 120 ) {
             $( '.top' ).fadeIn();
           } else {
             $( '.top' ).fadeOut();

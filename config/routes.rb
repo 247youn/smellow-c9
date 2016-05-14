@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   
   post '/postcomment' => 'home#post_comment'
   
+  
+  
 
   
      

@@ -1,54 +1,53 @@
-<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" /> 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 
 <section id="wrapper">
- 
- 
-  <div class="img_bg">
-    <div class="main_p">
-         <a href="/home/about">About</a> &nbsp &nbsp |&nbsp &nbsp 
-           <% if user_signed_in? %>
-        <a href="/mypage">My Page</a>
-          <% else %>
-        <a href="/users/sign_in">Log in</a>
-          <% end %>
-       </div>
-  </div>
-<!--%=  image_tag("bg1.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_left") %>
-<!--%= image_tag("bg2.png", :alt => "rss feed", :width => "100%", :class => "img_bg img_bg_right") %>-->
-
-<!--%= image_tag("main.png",:width => "100%", :class => "main_logo") %-->
- 
-<script>
-$(document).ready(function() {
-    updateBodySize();
-}); //kiedy zaladowany
-$(window).resize(function() {
-    updateBodySize();
-});  //kiedy zmiana rozmiaru
-
-function updateBodySize(){
-  $('.img_bg').each(function() {
-        var that = $(this);
-
-        var $imgWidth = that.width();
-        var $divWidth = that.parent().width();
-
-        if($imgWidth > $divWidth) {
-            var $position = -1 * ($imgWidth/2 - $divWidth/2);
-            $position = $position.toString() + "px";
-            that.css("left", $position);
-        }
-    });
-}
 
 
-</script>
+
+    <div class="img_bg">
+        <div id="main_nav" class="main_p absolute">
+            <a id="about">About</a>|
+            <% if user_signed_in? %>
+                <a href="/mypage">My Page</a>
+                <% else %>
+                    <a href="/users/sign_in">Log in</a>
+                    <% end %>
+        </div>
+    </div>
     
-       
+    
       
-    
+    <script>
+        var menu = document.querySelector('#main_nav'),
+            origOffsetY = menu.offsetTop;
+
+        function scroll() {
+            if ($(window).scrollTop() >= origOffsetY) {
+                $('#main_nav').addClass('sticky');
+                $('#main_nav').removeClass('absolute');
+            }
+            else {
+                $('#main_nav').removeClass('sticky');
+                $('#main_nav').addClass('absolute');
+            }
+        }
+        document.onscroll = scroll;
+
+        $("#about").click(function() {
+
+            var $target = $("#about_text");
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function() {
+                window.location.hash = target;
+            });
+        });
+    </script>
+
+ 
 
 
 
@@ -57,78 +56,129 @@ function updateBodySize(){
 
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-6">
-        <%= image_tag("logo2.png", :class => "logo_2") %>
-      </div>
-      <div class="col-md-6 col-xs-12 about_text">
-        <p>오랜 해외여행을 떠난 남자친구를 기다렸던 당신!<br>
-          기념품으로 향수를 사왔다는 데 왠지 긴장되지 않나요?<br><br>
-          옆 자리 친구가 내일 생일이라는데, 간단하게 핸드크림 선물을 해주고 싶은 당신!<br>
-          좋아하는 향수 이름은 알아도 어떤 핸드크림을 좋아하는지 모르는 당신에게.<br><br>
-          어느날, 바디워시를 사용하며 바디워시 향이 마음에 든 당신!<br>
-          비슷한 향의 향수를 구매하고 싶다고 생각한 당신에게 특정 향수를 추천한다면?<br>
-        </p>
-      </div>     
-    </div>
-  </div>
-  <div class="row" style="margin-bottom: 30px;">
-    <div class="col-md-12">
-      <div class="col-md-6"></div>
-      <a href="/users/sign_in"><div class="col-md-6 about_btn">Start Smellow</div></a>
-   </div>
-  </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
+    <div class="row" id="about_text">
         <div class="col-md-12">
-          <div class="col-md-12">   
-                   <div class="about_text_2">
-            <p>먼저<br>
-               일상 생활 속 에서 좋아했던 향기를 기억 해내세요<br>
-            </p>
-         </div>   
-            <img class="main_img_1" src="http://imageshack.com/a/img537/4350/4mYErl.png">
+            <div class="col-md-6">
+                <%=image_tag( "logo2.png", :class=> "logo_2") %>
+            </div>
+            <div class="col-md-6 col-xs-12 about_text">
+                <p>오랜 해외여행을 떠난 남자친구를 기다렸던 당신!
+                    <br> 기념품으로 향수를 사왔다는 데 왠지 긴장되지 않나요?
+                    <br>
+                    <br> 옆 자리 친구가 내일 생일이라는데, 간단하게 핸드크림 선물을 해주고 싶은 당신!
+                    <br> 좋아하는 향수 이름은 알아도 어떤 핸드크림을 좋아하는지 모르는 당신에게.
+                    <br>
+                    <br> 어느날, 바디워시를 사용하며 바디워시 향이 마음에 든 당신!
+                    <br> 비슷한 향의 향수를 구매하고 싶다고 생각한 당신에게 특정 향수를 추천한다면?
+                    <br>
+                </p>
+            </div>
         </div>
+    </div>
+    <div class="row" style="margin-bottom: 50px;">
+        <div class="col-md-12">
+            <div class="col-md-6"></div>
+            <a href="/users/sign_in">
+                <div class="col-md-6 about_btn">Start Smellow</div>
+            </a>
         </div>
     </div>
 </div>
 
-
-
-
-
-
-<div class="row">
-  <div class="col-md-12" style="background-color:rgb(80,80,80); height: 120px; padding:15px; color: rgb(200,200,200)">
-  <div class="col-md-4"></div>
-    <div class="col-md-4 foot_t">
-    <a href="#" class="top"><div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true">&nbsp;top</span></div></a>
+<div class="container-fluid" style="padding:0px;">
+    <div class="row img_div">
+        <%=image_tag( "image.png", :class=> "img1") %>
+        <!--<div class="col-md-6 img_over"></div>
+        <div class="col-md-6 img_text">
+            <p>먼저,
+                <br> 일상 생활 속 에서 좋아했던 향기를 기억 해내세요
+                <br>
+                <br> 좋아하는 이불,
+                <br> 길거리에서 우연히 맡았던 꽃,
+                <br> 오늘 친구가 썼던 핸드크림.
+                <br> 그 사람의 향수까지
+                <br>
+                <br> 당신은 어떤 것들을 좋아하나요?
+                <br> 그리고 어떤 것들을 좋아하게 될까요?</p>
+        </div>-->
     </div>
-  <div class="col-md-4"> created by<br>Garam An &nbsp Jina Lee &nbsp Younsuk Lee &nbsp Byungmuk Kim</div>
-  
-  </div>
 </div>
+
+<div class="container-fluid" style="padding:0px;">
+    <div class="row img_div">
+        <%=image_tag( "image2.png", :class=> "img1") %>
+            <!--<div class="col-md-2 img_over is-lefted"></div>-->
+            <!--<div class="col-md-6 img_text is-lefted">
+            
+            <p>당신이 골랐던
+                    <br> 이 향 덩어리 들은
+                    <br> 당신을 어떠한 향으로 이끕니다.
+                    <br>
+                    <br> 향 덩어리들은
+                    <br> 눈에 보이지 않기 때문에
+                    <br> 우리들은 코에만 의지해
+                    <br> 걸어갑니다
+                    <br>
+                </p>
+            </div>
+            <div class="col-md-6 img_over"></div>-->
+    </div>
+</div>
+
+<div class="container-fluid" style="padding:0px;">
+    <div class="row img_div">
+        <%=image_tag( "image3.png", :class=> "img1") %>
+            <!--<div class="col-md-6 img_over"></div>
+            <div class="col-md-6 img_text">
+                
+                <p>무언가를 기록하고 정리하는 일은
+                    <br> 일기장이 아닌 이상, 
+                    <br> 누군가에게 전달되기 위함입니다
+                    <br>
+                    <br> 그리고 이러한 과정들을 통해
+                    <br> 스멜로우에서 사람들은
+                    <br> 서로의 취향을 존중하고 기억합니다
+                    <br>
+                </p>
+            </div>-->
+    </div>
+</div>
+
+
+            <div class="row">
+                <div class="col-md-12 foot_1">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 foot_t">
+                        <a href="#" class="top">
+                            <div class="col-md-4"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"><br>top</span></div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 foot_2"> created by
+                        <br>Garam An &nbsp Jina Lee &nbsp Younseok Lee &nbsp Byungmook Kim</div>
+
+                </div>
+            </div>
 </section>
 
 
 
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script>
-      $( document ).ready( function() {
-        $( window ).scroll( function() {
-          if ( $( this ).scrollTop() > 80 ) {
-            $( '.top' ).fadeIn();
-          } else {
-            $( '.top' ).fadeOut();
-          }
-        } );
-        $( '.top' ).click( function() {
-          $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-          return false;
-        } );
-      } );
-    </script>
+<script>
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 120) {
+                $('.top').fadeIn();
+            }
+            else {
+                $('.top').fadeOut();
+            }
+        });
+        $('.top').click(function() {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
+    });
+</script>
